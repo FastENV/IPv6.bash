@@ -6,17 +6,19 @@ source "${SCRIPT_PATH}/../IPv6.sh"
 
 ipGen48Subnet(){
 	local prefix count
-	local i j var
+	local i j
 
 	prefix="${1}"
 	count="${2}"
-	for var in prefix count
-	do
-		if ! [[ "${!var}" ]]
-		then
-			return 1
-		fi
-	done
+	count="${count:=1}"
+	if ! [[ "${prefix}" ]]
+	then
+		return 1
+	fi
+	if ! [[ "${count}" =~ ^[0-9]+$ ]]
+	then
+		return 2
+	fi
 	for i in {0..65535}
 	do
 		for ((j=0; j<count; j++))
